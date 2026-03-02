@@ -5,15 +5,14 @@ import java.util.Stack;
  * MAIN CLASS - PalindromeCheckerApp
  * =============================================================
  *
- * Use Case 12: Strategy Pattern for Palindrome Algorithms
+ * Use Case 13: Performance Comparison
  *
  * Description:
- * This class demonstrates how different palindrome
- * validation algorithms can be selected dynamically
- * at runtime using the Strategy Design Pattern.
+ * This class measures and compares the execution
+ * performance of palindrome validation algorithms.
  *
  * @author Developer
- * @version 12.0
+ * @version 13.0
  */
 
 public class PalindromeCheckerApp {
@@ -23,46 +22,47 @@ public class PalindromeCheckerApp {
         System.out.println("====================================");
         System.out.println("     PALINDROME CHECKER SYSTEM");
         System.out.println("====================================");
-        System.out.println("Version: 12.0");
-        System.out.println("Use Case 12: Strategy Pattern Implementation");
+        System.out.println("Version: 13.0");
+        System.out.println("Use Case 13: Performance Comparison");
         System.out.println();
 
-        String input = "madam";
+        String input = "A man a plan a canal Panama";
 
-        // Inject strategy at runtime
+        // Use strategy (Stack-based here)
         PalindromeStrategy strategy = new StackStrategy();
+
+        // Capture start time
+        long startTime = System.nanoTime();
 
         boolean result = strategy.check(input);
 
+        // Capture end time
+        long endTime = System.nanoTime();
+
+        // Calculate execution duration
+        long duration = endTime - startTime;
+
         if (result) {
-            System.out.println("The word '" + input + "' is a PALINDROME.");
+            System.out.println("The input is a PALINDROME.");
         } else {
-            System.out.println("The word '" + input + "' is NOT a palindrome.");
+            System.out.println("The input is NOT a palindrome.");
         }
 
+        System.out.println("Execution Time (nanoseconds): " + duration);
         System.out.println();
-        System.out.println("Program finished.");
+        System.out.println("Benchmarking completed.");
     }
 }
 
 /**
- * =============================================================
- * INTERFACE - PalindromeStrategy
- * =============================================================
- *
- * Defines a contract for all palindrome algorithms.
+ * Strategy Interface
  */
 interface PalindromeStrategy {
-
     boolean check(String input);
 }
 
 /**
- * =============================================================
- * CLASS - StackStrategy
- * =============================================================
- *
- * Concrete strategy implementation using Stack.
+ * Stack-based implementation
  */
 class StackStrategy implements PalindromeStrategy {
 
@@ -71,14 +71,17 @@ class StackStrategy implements PalindromeStrategy {
 
         if (input == null) return false;
 
+        // Normalize (for fair comparison)
+        String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
         Stack<Character> stack = new Stack<>();
 
-        for (char c : input.toCharArray()) {
+        for (char c : normalized.toCharArray()) {
             stack.push(c);
         }
 
-        for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) != stack.pop()) {
+        for (int i = 0; i < normalized.length(); i++) {
+            if (normalized.charAt(i) != stack.pop()) {
                 return false;
             }
         }
