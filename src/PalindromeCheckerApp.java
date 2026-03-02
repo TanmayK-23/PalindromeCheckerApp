@@ -1,19 +1,18 @@
-import java.util.Scanner;
+import java.util.Stack;
 
 /**
  * =============================================================
  * MAIN CLASS - PalindromeCheckerApp
  * =============================================================
  *
- * Use Case 4: Character Array Based Validation
+ * Use Case 5: Stack Based Palindrome Checker
  *
  * Description:
- * This class validates a palindrome by converting
- * the string into a character array and comparing
- * characters using the two-pointer technique.
+ * This class validates a palindrome using a Stack
+ * data structure which follows the LIFO principle.
  *
  * @author Developer
- * @version 4.0
+ * @version 5.0
  */
 
 public class PalindromeCheckerApp {
@@ -23,43 +22,40 @@ public class PalindromeCheckerApp {
         System.out.println("====================================");
         System.out.println("     PALINDROME CHECKER SYSTEM");
         System.out.println("====================================");
-        System.out.println("Version: 4.0");
-        System.out.println("Use Case 4: Character Array Based Validation");
+        System.out.println("Version: 5.0");
+        System.out.println("Use Case 5: Stack Based Palindrome Checker");
         System.out.println();
 
-        Scanner scanner = new Scanner(System.in);
+        // Declare and initialize the input string
+        String input = "noon";
 
-        System.out.print("Enter a word to check: ");
-        String word = scanner.nextLine();
+        // Create a Stack to store characters
+        Stack<Character> stack = new Stack<>();
 
-        // Convert string to character array
-        char[] characters = word.toCharArray();
+        // Push each character into the stack
+        for (char c : input.toCharArray()) {
+            stack.push(c);
+        }
 
-        int start = 0;
-        int end = characters.length - 1;
-
+        // Assume palindrome initially
         boolean isPalindrome = true;
 
-        // Two-pointer comparison
-        while (start < end) {
-            if (characters[start] != characters[end]) {
+        // Compare original string with popped characters
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) != stack.pop()) {
                 isPalindrome = false;
                 break;
             }
-            start++;
-            end--;
         }
 
         // Display result
         if (isPalindrome) {
-            System.out.println("The word '" + word + "' is a PALINDROME.");
+            System.out.println("The word '" + input + "' is a PALINDROME.");
         } else {
-            System.out.println("The word '" + word + "' is NOT a palindrome.");
+            System.out.println("The word '" + input + "' is NOT a palindrome.");
         }
 
         System.out.println();
         System.out.println("Program finished.");
-
-        scanner.close();
     }
 }
